@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.12.0/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+    <title>首页</title>
+    <style>
+        * {
+            /*border: 0;*/
+            /*vertical-align: baseline;*/
+            /*-webkit-box-sizing: border-box;*/
+            /*-moz-box-sizing: border-box;*/
+            /*box-sizing: border-box;*/
+            /*list-style: none;*/
+            /*margin: 0;*/
+            /*padding: 0;*/
+            /*font-style: normal;*/
+            /*text-decoration: none;*/
+            /*font-family: PingFangSC-Regular,sans-serif,PingFangSC-Light,sans-serif,"Microsoft YaHei",arial;*/
+            /*text-align: left;*/
+        }
+        body {
+            background-color: #fff;
+            font-family: "Open Sans",sans-serif;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #929292;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+        .fl {float:left}
+        .fr {float:right}
+        .el-row {margin-bottom:0}
+        .el-col {border-radius:4px}
+        .footer1 {
+            height: 300px;
+            padding: 30px 0;
+            background: #333;
+        }
+        .footer1 {
+            height: 200px;
+            padding: 25px 40px ;
+        }
+        .footer2 {
+            padding: 15px 0;
+            font-size: 12px;
+            line-height: 1;
+        }
+        .page-header-banner {
+            height: 445px;
+            background: #fcc;
+            position: relative;
+        }
+        .page-header {
+            float: left;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.25);
+            position: absolute;
+            top: 0;
+            height: 85px;
+            z-index: 10;
+        }
+        .el-carousel {
+            height: 100%;
+            position: absolute;
+            top: 0;
+        }
+        .bg-purple-light {
+            background: #f5f5f5;
+        }
+        .grid-content {
+            height: 45px;
+        }
+        .el-carousel__item h3 {
+            color: #475669;
+            font-size: 18px;
+            opacity: 0.75;
+            text-align: center;
+            line-height: 445px;
+            height: 100%;
+            margin: 0;
+        }
+        .el-carousel__item:nth-child(4n) {
+            background-color: #ff9b6a;
+        }
+        .el-carousel__item:nth-child(4n+1) {
+            background-color: #f1f1b8;
+        }
+        .el-carousel__item:nth-child(4n+2) {
+            background-color: #b8f1cc;
+        }
+        .el-carousel__item:nth-child(4n+3) {
+            background-color: #b7d28d;
+        }
+    </style>
+
+    <style>
+        .el-card {
+            width:284px;
+            height:405px;
+        }
+        .time {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .bottom {
+            margin-top: 13px;
+            line-height: 12px;
+        }
+
+        .button {
+            padding: 0;
+            float: right;
+        }
+
+        .image {
+            width: 100%;
+            display: block;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            display: table;
+            content: "";
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+        #scroll-top {
+            /*display: none;*/
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background-color: rgba(0,0,0,0.4);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            -ms-border-radius: 2px;
+            border-radius: 2px;
+            text-align: center;
+            z-index: 100;
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+    </style>
+</head>
+
+<body><a id="scroll-top" class="scroll-top-right" href="#" style="display: block;"><span class="fa fa-angle-up"></span></a>
+<div id="app">
+    <!-- page header -->
+    <el-row class="page-header-banner">
+        <div class="page-header">fdafdafdsafadsfsafdafaf</div>
+        <el-col :span="24">
+            <el-carousel :interval="5000" height="445px" arrow="always">
+                <el-carousel-item v-for="item in 4" :key="item">
+                    <h3 class="small">{{ item }}</h3>
+                </el-carousel-item>
+            </el-carousel>
+        </el-col>
+    </el-row>
+    <el-row>
+        <el-col :span="8" v-for="(o, index) in 4" :key="o">
+            <el-card :body-style="{padding:'10px 10px 0'}" shadow="hover">
+                <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+                <div style="padding: 14px;">
+                    <span>好吃的汉堡</span>
+                    <div class="bottom clearfix">
+                        <time class="time">{{ currentDate }}</time>
+                        <el-button type="text" class="button">操作按钮</el-button>
+                    </div>
+                </div>
+            </el-card>
+        </el-col>
+        <el-col :span="24">
+            <div class="bg-purple-light footer1">
+                <dl class="fl">
+                    <dt>常见问题</dt>
+                    <dd>成为特邀设计师</dd>
+                    <dd>注册登录</dd>
+                    <dd>账号/密码</dd>
+                    <dd>发票/售后</dd>
+                    <dd>版权投诉</dd>
+                </dl>
+                <dl class="fl">
+                    <dt>关于</dt>
+                    <dd>关于我们</dd>
+                    <dd>加入我们</dd>
+                </dl>
+                <dl class="fl">
+                    <dt>产品服务</dt>
+                    <dd>官方博客</dd>
+                    <dd>帮助中心</dd>
+                </dl>
+                <div class="fr service">
+                    <p class="service-title">客服咨询</p>
+                    <p class="service-qq"><el-button type="primary"><i class="icon-QQ"></i>点我交谈</el-button></p>
+                    <p class="service-email"><i class="icon-contact"></i>aaaabbbb@email.com</p>
+                </div>
+            </div>
+        </el-col>
+        <el-col :span="24" class="bg-purple-light">
+            <div class="footer2">
+                Copyright ©2018-2019 图库网 备案号12341234号 ICP证书 公安备案12123412341234号
+            </div>
+        </el-col>
+    </el-row>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/element-ui@2.12.0/lib/index.js"></script>
+<script>
+    var data = {
+        title: '请登录',
+        submit: '登录',
+        showMsg: false,
+        msg: '账号和密码不匹配！',
+        form: {
+            account: '大锅',
+            password: '456'
+        },
+        currentDate: new Date()
+    };
+    new Vue({
+        el: '#app',
+        data: data
+    });
+    var onLogin = function () {
+        axios.post('/admin/login', data.form)
+            .then(function (resp) {
+                if (resp.data && resp.data.code == 0) {
+                    location.href = '/guest';
+                } else {
+                    data.msg = resp.data.msg;
+                    data.showMsg = true;
+                }
+                // TODO 显示错误提示
+            })
+            .catch(function (error) {
+                data.msg = error;
+                data.showMsg = true;
+                // TODO 显示错误提示
+            });
+    };
+</script>
+</html>
