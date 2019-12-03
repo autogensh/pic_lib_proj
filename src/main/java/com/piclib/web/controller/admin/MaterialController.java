@@ -21,9 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class MaterialController extends TController<Material, MaterialExample, MaterialMapper> {
@@ -46,7 +44,7 @@ public class MaterialController extends TController<Material, MaterialExample, M
     @SuppressWarnings("unchecked")
     @GetMapping(basePath + "/list")
     public Object getList(
-            @RequestParam(name = "page", required = false, defaultValue = Constants.defaultPage) Integer page,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "pageSize", required = false, defaultValue = Constants.defaultPageSize) Integer pageSize) {
         HashMap<String, Object> req = new HashMap<>();
         req.put("page", page);
@@ -76,7 +74,7 @@ public class MaterialController extends TController<Material, MaterialExample, M
         int sec = c.get(Calendar.SECOND);
         int ms = c.get(Calendar.MILLISECOND);
         String date = String.format("%d-%d-%d", year, month, day);
-        String filePath = String.format("D:\\nginx-1.17.5\\html\\images\\%s", date);
+        String filePath = String.format("%s%s", Constants.defaultMaterialDir, date);
         String fileName = String.format("%d%d%d%d%d%d%d_%s.orin",
                 year, month, day, hour, min, sec, ms,
                 Generator.generateString(5));
@@ -86,17 +84,20 @@ public class MaterialController extends TController<Material, MaterialExample, M
                 return JsonResp.uploadFileError();
             }
         }
+        Utils.Timer timer = new Utils.Timer();
         try {
             String newFile = String.format("%s\\%s.%s", filePath, fileName, ext);
             FileOutputStream fos = new FileOutputStream(newFile);
             fos.write(file.getBytes());
             fos.flush();
             fos.close();
+            System.out.println(String.format("复制文件耗时： %dms", timer.mark()));
 
             // 获取图片信息
             BufferedImage bi = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
             width = bi.getWidth();
             height = bi.getHeight();
+            System.out.println(String.format("ImageIO获取文件信息耗时： %dms", timer.mark()));
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResp.uploadFileError();
@@ -135,6 +136,24 @@ public class MaterialController extends TController<Material, MaterialExample, M
         }
         if (result < 1) {
             return JsonResp.databaseInsertError();
+        }
+
+        // 更新t_material_tag表
+        adminMapper.deleteMaterialTags(req.getId());
+        if (!req.getTags().isEmpty()) {
+            List<HashMap<String, Object>> list = new ArrayList<>();
+            String[] tags = req.getTags().split(",");
+            for (String tag : tags) {
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("matId", req.getId());
+                map.put("tag", tag);
+                map.put("isDeleted", false);
+                list.add(map);
+            }
+            result = adminMapper.insertMaterialTagList(list);
+            if (result < 1) {
+                return JsonResp.databaseInsertError();
+            }
         }
 
         // 更新t_material_file表

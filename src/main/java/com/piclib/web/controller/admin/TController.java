@@ -11,7 +11,6 @@ import com.piclib.web.util.Constants;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Date;
 import java.util.List;
 
 public class TController<Entity extends BaseEntity,
@@ -27,7 +26,7 @@ public class TController<Entity extends BaseEntity,
     }
 
     public Object getList(String orderBy) {
-        return this.getList(orderBy, Integer.parseInt(Constants.defaultPage), Integer.parseInt(Constants.defaultPageSize));
+        return this.getList(orderBy, 1, Integer.parseInt(Constants.defaultPageSize));
     }
 
     @SuppressWarnings("unchecked")

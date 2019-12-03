@@ -28,7 +28,7 @@ public class JsonResp {
     }
 
     public static Object databaseInsertError() {
-        return new JsonResp(-2, "服务器忙，请刷新试试！");
+        return new JsonResp(-2, "服务器忙，请过会儿重试！");
     }
 
     public static Object usernameOrPasswordError() {

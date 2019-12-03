@@ -98,6 +98,8 @@ create table `t_material_tag`
 ) charset = `utf8mb4`
   engine = InnoDB
   auto_increment = 1 comment ='素材标签关联表';
+create index `idx_t_material_tag_matId` on `t_material_tag` (`matId`);
+create unique index `idx_t_material_tag_matId_tag_uni` on `t_material_tag` (`matId`, `tag`);
 
 
 -- 用户关注表

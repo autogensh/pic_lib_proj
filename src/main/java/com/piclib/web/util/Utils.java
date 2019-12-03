@@ -16,4 +16,17 @@ public class Utils {
         }
         return String.format("%dB", size);
     }
+    public static class Timer {
+        private long time;
+        public Timer() {
+            this.time = System.currentTimeMillis();
+        }
+        public long mark() {
+            long time = System.currentTimeMillis();
+            long deltaTime = time - this.time;
+            this.time = time;
+            return deltaTime;
+
+        }
+    }
 }
