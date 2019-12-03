@@ -11,7 +11,12 @@ import com.piclib.web.model.UploadResp;
 import com.piclib.web.util.Constants;
 import com.piclib.web.util.Generator;
 import com.piclib.web.util.Utils;
+import org.im4java.core.ConvertCmd;
+import org.im4java.core.IMOperation;
+import org.im4java.core.IdentifyCmd;
+import org.im4java.process.ArrayListOutputConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,13 +26,28 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class MaterialController extends TController<Material, MaterialExample, MaterialMapper> {
     private static final String basePath = "/admin/material";
     private MaterialFileMapper fileMapper;
     private MaterialFileExample fileExample;
+    private ConvertCmd convert;
+    private IdentifyCmd identify;
+
+    @Bean
+    public ConvertCmd getConvertCmd() {
+        return new ConvertCmd(true);
+    }
+
+    @Bean
+    public IdentifyCmd getIdentifyCmd() {
+        return new IdentifyCmd(true);
+    }
 
     @Autowired
     public MaterialController(
@@ -39,6 +59,16 @@ public class MaterialController extends TController<Material, MaterialExample, M
         super(mapper, example, adminMapper);
         this.fileMapper = fileMapper;
         this.fileExample = fileExample;
+    }
+
+    @Autowired
+    private void setIdentify(IdentifyCmd identify) {
+        this.identify = identify;
+    }
+
+    @Autowired
+    private void setConvert(ConvertCmd convert) {
+        this.convert = convert;
     }
 
     @SuppressWarnings("unchecked")
@@ -62,9 +92,10 @@ public class MaterialController extends TController<Material, MaterialExample, M
         // 获取扩展名
         String contentType = file.getContentType();
         assert contentType != null;
-        String ext = contentType.substring(contentType.indexOf("/") + 1);
-        int width = 0;
-        int height = 0;
+        String ext = contentType.substring(contentType.indexOf("/") + 1).toLowerCase();
+        String width = "0";
+        String height = "0";
+        String format = ext;
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH) + 1;
@@ -93,11 +124,28 @@ public class MaterialController extends TController<Material, MaterialExample, M
             fos.close();
             System.out.println(String.format("复制文件耗时： %dms", timer.mark()));
 
-            // 获取图片信息
-            BufferedImage bi = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
-            width = bi.getWidth();
-            height = bi.getHeight();
-            System.out.println(String.format("ImageIO获取文件信息耗时： %dms", timer.mark()));
+            if ("png".equals(format)) {
+                // 使用GraphicsMagick获取图片信息
+                IMOperation op = new IMOperation();
+                op.format("%w,%h,%d/%f,%Q,%b,%e");
+                op.addImage();
+                ArrayListOutputConsumer output = new ArrayListOutputConsumer();
+                identify.setOutputConsumer(output);
+                identify.run(op, newFile);
+                String[] result = output.getOutput().get(0).split(",");
+                if (result.length == 6) {
+                    width = result[0];
+                    height = result[1];
+                    format = result[5];
+                }
+                System.out.println(String.format("GraphicsMagick获取文件信息耗时： %dms", timer.mark()));
+            } else {
+                // 使用ImageIO获取图片信息
+                BufferedImage bi = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
+                width = String.valueOf(bi.getWidth());
+                height = String.valueOf(bi.getHeight());
+                System.out.println(String.format("ImageIO获取文件信息耗时： %dms", timer.mark()));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResp.uploadFileError();
@@ -107,10 +155,10 @@ public class MaterialController extends TController<Material, MaterialExample, M
         String url = String.format("/images/%s/%s.%s", date, fileName, ext);
         MaterialFile materialFile = new MaterialFile();
         materialFile.setFileUrl(url);
-        materialFile.setFileFormat(ext);
+        materialFile.setFileFormat(format);
         materialFile.setFileSize(Utils.humanSize(file.getSize()));
         materialFile.setDesc("");
-        materialFile.setMeasure(String.format("%dx%d", width, height));
+        materialFile.setMeasure(String.format("%sx%s", width, height));
         materialFile.setColorSpace("sRGB");
         return new UploadResp(materialFile);
     }
