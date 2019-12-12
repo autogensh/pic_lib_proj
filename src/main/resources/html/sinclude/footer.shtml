@@ -1,0 +1,32 @@
+<div class="footer">
+  <div class="footer-title">
+    <div class="footer-title-left"><img src="/logo-jos.png"></div>
+    <h2 class="footer-title-right">最新发布</h2>
+  </div>
+  <div class="footer-body">
+    <div class="footer-body-left">
+      <div class="footer-body-item"><a href="/about/" target="_blank" rel="noopener">关于我们</a></div>
+      <div class="footer-body-item"><a href="/about/" target="_blank" rel="noopener">联系我们</a></div>
+      <div class="footer-body-item"><a href="/user-terms/" target="_blank" rel="noopener">用户条款</a></div>
+      <div class="footer-body-item"><a href="/private-policy/" target="_blank" rel="noopener">隐私政策</a></div>
+      <div class="footer-body-item"><a href="/license/" target="_blank" rel="noopener">许可协议</a></div>
+    </div>
+    <div class="footer-body-right">
+      <div class="footer-body-item"><a href="" target="_blank" rel="noopener">圣诞节礼品包装设计圣诞节礼品包装设计圣诞节礼品包装设计圣诞节礼品包装设计</a></div>
+      <div class="footer-body-item"><a href="" target="_blank" rel="noopener">圣诞节礼品包装设计圣诞节礼品包装设计圣诞节礼品包装设计圣诞节礼品包装设计</a></div>
+      <div class="footer-body-item"><a href="" target="_blank" rel="noopener">圣诞节礼品包装设计圣诞节礼品包装设计圣诞节礼品包装设计圣诞节礼品包装设计</a></div>
+      <div class="footer-body-item"><a href="" target="_blank" rel="noopener">圣诞节礼品包装设计圣诞节礼品包装设计圣诞节礼品包装设计圣诞节礼品包装设计</a></div>
+      <div class="footer-body-item"><a href="" target="_blank" rel="noopener">圣诞节礼品包装设计</a></div>
+      <div class="footer-body-item"><a href="" target="_blank" rel="noopener">圣诞节礼品包装设计</a></div>
+      <div class="footer-body-item"><a href="" target="_blank" rel="noopener">圣诞节礼品包装设计圣诞节礼品包装设计圣诞节礼品包装设计圣诞节礼品包装设计</a></div>
+      <div class="footer-body-item"><a href="" target="_blank" rel="noopener">圣诞节礼品包装设计</a></div>
+      <div class="footer-body-item"><a href="" target="_blank" rel="noopener">圣诞节礼品包装设计</a></div>
+      <div class="footer-body-item"><a href="" target="_blank" rel="noopener">圣诞节礼品包装设计</a></div>
+      <div class="footer-body-item"><a href="" target="_blank" rel="noopener">圣诞节礼品包装设计</a></div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    粤ICP备10066666号-6<br><br>
+    © Dimensiva 2017 - 2020 All Rights reserved.
+  </div>
+</div>

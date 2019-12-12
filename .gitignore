@@ -40,3 +40,4 @@ logs/
 target/
 node_modules/
 
+/src/main/resources/html/images/

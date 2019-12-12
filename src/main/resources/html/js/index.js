@@ -1,31 +1,35 @@
 var imgs = [
+    '87058PICFreua6eFaTE4M_PIC2018.png',
+    '92j58PICD58PICi74xh58PIC56JYh_PIC2018.jpg',
     '81x58PICzb3jby2dbcE5k_PIC2018.jpg',
-    '058PICm58PIC5aS633ytP2kFF_PIC2018.png',
-    '81858PIC2dkb1dwbFHa4C_PIC2018.jpg',
-    '04758PIC9Fn0C8R61rdq58PIC_PIC2018.jpg',
-    '43k58PICzXH9xx6d3aQ5e_PIC2018.jpg',
-    '88058PICcD1w58PICrx25z58PICWc_PIC2018.jpg',
-    '56158PICv9sfVY289BdHd_PIC2018.png',
-    '58m58PICd9Icf4fif7f5r_PIC2018.jpg',
-    '05f58PICff3Uafaf9KfvG_PIC2018.jpg',
+    '44e58PICf2mfwGufKFq6e_PIC2018.jpg',
+    '82G58PICqmcPv0cEafEf0_PIC2018.jpg',
+    '73958PICUganU2kNqe71D_PIC2018.jpg',
+    '38F58PIC8aF2fzHf6Rb75_PIC2018.jpg',
+    '16T58PICaU7hufecEK9H6_PIC2018.jpg',
+    '97M58PIC7kiG3A3bA313W_PIC2018.jpg',
     '43658PICDMYDVQrqgX7f8_PIC2018.jpg',
-    '43f58PIC7j8jT3xwx8CmC_PIC2018.jpg',
-    '59K58PICV657dvC9NIcrx_PIC2018.jpg',
-    '66058PIC5d7v02uDV87fd_PIC2018.png',
-    '08i58PICeytd8d1wJazb1_PIC2018.jpg',
-    '62b58PICDnGIE37cPbe7c_PIC2018.jpg',
-    '14u58PIC295f2Wabf4X58PIC58PIC_PIC2018.jpg',
-    '89858PIC79Y4H22Q58PIC9enj_PIC2018.jpg',
-    '25h58PIC4RI3p7Gaa0wY3_PIC2018.jpg',
-    '57N58PICeCeD7JKA6Byne_PIC2018.jpg',
-    '69q58PIC1dSb333JajNa5_PIC2018.jpg'
+    '55s58PICbYS2ZHeh9d2dG_PIC2018.jpg',
+    '97058PICbc4ie46M2x2vR_PIC2018.jpg',
+    '31q58PICy6j64cc8u7Fw8_PIC2018.jpg',
+    '00958PIC7Y780iRmd7IUC_PIC2018.jpg',
+    '58PIC8358PICuf2vy20Chp358PICe_PIC2018.jpg',
+    '38n58PICFbG58PICY7gcYb35p_PIC2018.jpg',
+    '01958PICP58PICpy658PIC3t3VdVa_PIC2018.jpg',
+    '50e58PICedWu0ZY258PICex6g_PIC2018.jpg',
+    '3711_detail.jpg',
+    '79258PICS61XK7BE8c5x3_PIC2018.jpg',
+    '60458PICdCIQcqfdD985J_PIC2018.jpg',
+    '54858PIC1SNI7Xy2ENuz7_PIC2018.jpg',
+    '9533_detail.jpg'
 ];
-var tpl = '<div class="mat"><div class="mat_inner"><div class="mat_img"><img src="/images/mat/{{IMG_URL}}"></div><div class="mat_detail">圣诞节礼品包装设计</div></div></div>';
-var matlist = document.getElementById('matclean');
+var tpl = '<div class="mat_inner"><div class="mat_img"><img src="/images/dimen/{{IMG_URL}}"></div><div class="mat_detail">圣诞节礼品包装设计</div></div>';
+var matList = document.getElementById('mat-list');
 for (var i in imgs) {
     var newNode = document.createElement('div');
+    newNode.className = 'mat';
     newNode.innerHTML = tpl.replace(/{{IMG_URL}}/, imgs[i]);
-    matlist.before(newNode);
+    matList.append(newNode);
 }
 
 var initPagination = function (id, page, size, total) {

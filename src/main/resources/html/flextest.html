@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            width: 100%;
+            background: #89479B;
+            display: flex;
+            display: -webkit-flex; /* Safari */
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        .item {
+            width: 200px;
+            height: 300px;
+            background: #E88024;
+            line-height: 300px;
+            margin: 10px 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="navbar" class="navbar">
+    <div id="logo"></div>
+    <div id="navitem"></div>
+</div>
+<div id="box" class="box">
+</div>
+<script>
+    var fill = function (count) {
+        var box = document.getElementById('box');
+        for (var i = 1; i <= count; i++) {
+            var item = document.createElement('div');
+            item.className = 'item';
+            item.innerText = i;
+            box.appendChild(item);
+        }
+    };
+    fill(10);
+</script>
+</body>
+</html>
