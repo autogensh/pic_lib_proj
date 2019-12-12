@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link id="gsFavicon" rel="icon" href="/ic_suspendy_16x16.png" />
+  <link rel="stylesheet" href="/css/style.css">
+  <title>许可协议</title>
+</head>
+<body>
+<div class="page">
+  <!--#include virtual="/sinclude/header.shtml"-->
+  <div class="content content-row">
+    <div class="container">
+      <div class="row" style="padding:0 25px;margin:0 auto;">
+        <div class="col-lg-7 col-md-5">
+          <div class="paper">
+            <div class="preview-area">
+              <div itemprop="image" class="preview-image">
+                <!--  Post Image Gallery  -->
+                <ul class="banner-slider2">
+                  <li>
+                    <img width="660" height="660"
+                         src="/images/20180324081016_uBfyC.jpeg"
+                         class="attachment-large size-large wp-post-image" alt=""
+                         srcset="/images/20180324081016_uBfyC.jpeg 1024w, /images/20180324081016_uBfyC.jpeg 800w, /images/20180324081016_uBfyC.jpeg 300w, /images/20180324081016_uBfyC.jpeg 768w, /images/20180324081016_uBfyC.jpeg 170w, /images/20180324081016_uBfyC.jpeg 1000w, https://dimensiva.com/wp-content/uploads/edd/2019/12/egg-chair-loungechair-by-fritz-hansen.jpg 1280w"
+                         sizes="(max-width: 1024px) 100vw, 1024px">
+                </ul>
+              </div>
+            </div>
+            <div class="content-area">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <div class="sidebar">
+            <h2 itemprop="name">Egg Chair Loungechair by Fritz Hansen</h2>
+            <div class="page_subtitle">PRO</div>
+            <div class="sidebar-item">
+              <div class="textwidget"></div>
+            </div>
+            <hr>
+            <div itemprop="alternativeHeadline">
+              <p>3d model Egg Chair Loungechair designed by Arne Jacobsen in 1958 for Fritz Hansen. Fritz Hansen started
+                designing furniture in 1872 and the company partnered with Arne Jacobsen in 1934. The collaboration
+                resulted in designs way ahead of their time and the label created furniture for the Copenhagen City Hall
+                and The Supreme Court, among others. Dimension of the chair: H 107 x L 86 x D 95 cm. The vray and corona
+                file comes with materials in place, ready to render it.</p>
+              <hr>
+              <a href="/pricing/">
+                <div class="le-buton1"> REGISTER </div>
+              </a>
+              <hr>
+              Categories: <a href="https://dimensiva.com/3dmodels/category/furniture/" rel="tag">Furniture</a>, <a
+              href="https://dimensiva.com/3dmodels/category/office/" rel="tag">Office</a>
+              <hr>
+            </div>
+            <ul class="tab">
+              <li><a href="javascript:void(0)" class="tablinks active" onclick="switchTab(event, 'File')"
+                     id="defaultOpen"><i class="icon icon-fmt"></i><br><b>FILE</b></a></li>
+              <li><a href="javascript:void(0)" class="tablinks" onclick="switchTab(event, 'Dimensions')"><i
+                class="icon icon-size"></i><br><b>DIMENSIONS</b></a></li>
+            </ul>
+            <div id="File" class="tabcontent" style="display: block;">
+              <div class="product-author"><b>FILE SIZE:</b>&nbsp;36 MB</div>
+              <div itemprop="fileFormat" class="product-author"><b>TYPE:</b>&nbsp;3ds Max 2014 (Vray + Corona), fbx, obj
+              </div>
+              <div class="product-author"><b>MATERIALS:</b>&nbsp;Yes for vray + corona file</div>
+              <div class="product-author"><b>TEXTURES:</b>&nbsp;Yes</div>
+            </div>
+            <div id="Dimensions" class="tabcontent" style="display: none;">
+              <div class="product-author"><b>FINISHES / COLOURS:&nbsp;</b>Walnut Color</div>
+              <div class="product-author"><b>DIMENSIONS:&nbsp;</b>H 107 x L 86 x D 95 cm</div>
+            </div>
+          </div>
+          <!-- 这里插入百度广告(如果有的话)
+          <hr>
+          -->
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+  <!--#include virtual="/sinclude/footer.shtml"-->
+</div>
+<script>
+    function switchTab(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+
+    }
+    document.getElementById("defaultOpen").click();
+</script>
+</body>
+</html>
