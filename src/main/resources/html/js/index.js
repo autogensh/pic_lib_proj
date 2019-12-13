@@ -23,7 +23,7 @@ var imgs = [
     '54858PIC1SNI7Xy2ENuz7_PIC2018.jpg',
     '9533_detail.jpg'
 ];
-var tpl = '<div class="mat_inner"><div class="mat_img"><img src="/images/dimen/{{IMG_URL}}"></div><div class="mat_detail">圣诞节礼品包装设计</div></div>';
+var tpl = '<a href="/detail.html" target="_blank"><div class="mat_inner"><div class="mat_img"><img src="/images/dimen/{{IMG_URL}}"></div><div class="mat_detail">圣诞节礼品包装设计</div></div></a>';
 var matList = document.getElementById('mat-list');
 for (var i in imgs) {
     var newNode = document.createElement('div');

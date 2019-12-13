@@ -7,7 +7,6 @@ import com.piclib.web.model.JsonResp;
 import com.piclib.web.model.LoginSuccessResp;
 import com.piclib.web.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,21 +16,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -43,31 +37,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
     private ObjectMapper objectMapper;
     private UserDetailsServiceImpl userDetailsService;
-    private DataSource dataSource;
     private PersistentTokenRepository tokenRepository;
     private UserMapper userMapper;
 
     @Autowired
-    private void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+    private void setTokenRepository(PersistentTokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
     }
 
     @Autowired
     private void setUserMapper(UserMapper userMapper) {
         this.userMapper = userMapper;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-        tokenRepository.setDataSource(dataSource);
-//        tokenRepository.setCreateTableOnStartup(true);
-        return tokenRepository;
     }
 
     @Autowired
@@ -111,7 +91,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout().logoutUrl("/admin/logout")
                 .logoutSuccessHandler(new AjaxLogoutSuccessHandler(objectMapper))
                 .and()
-                .rememberMe().userDetailsService(userDetailsService).tokenRepository(persistentTokenRepository())
+                .rememberMe().userDetailsService(userDetailsService).tokenRepository(tokenRepository)
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new UnauthorizedEntryPoint())
                 .and()
