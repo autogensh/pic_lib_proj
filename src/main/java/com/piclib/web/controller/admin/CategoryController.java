@@ -4,11 +4,15 @@ import com.piclib.web.dao.AdminMapper;
 import com.piclib.web.dao.MaterialCategoryMapper;
 import com.piclib.web.entity.MaterialCategory;
 import com.piclib.web.entity.MaterialCategoryExample;
+import com.piclib.web.model.ItemListResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class CategoryController extends TController<MaterialCategory, MaterialCategoryExample, MaterialCategoryMapper> {
@@ -19,9 +23,16 @@ public class CategoryController extends TController<MaterialCategory, MaterialCa
         super(mapper, example, adminMapper);
     }
 
+    @SuppressWarnings("unchecked")
     @GetMapping(basePath + "/list")
     public Object getCategoryList() {
-        return super.getList("updateAt desc, id desc", 1, 1000);
+        HashMap<String, Object> req = new HashMap<>();
+        req.put("orderBy", "id");
+        List<Object> list = adminMapper.selectCategoryList(req);
+        ItemListResp<HashMap<String, Object>> resp = new ItemListResp<>();
+        resp.items = (List<HashMap<String, Object>>) list.get(0);
+        resp.total = ((List<Integer>) list.get(1)).get(0);
+        return resp;
     }
 
     @PostMapping(basePath + "/update")

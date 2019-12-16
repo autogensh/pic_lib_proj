@@ -66,6 +66,26 @@
         </if>
         ;SELECT found_rows() as recordCount
     </select>
+    <select id="selectCategoryList" parameterType="java.util.HashMap" resultMap="materialListResultMap, recordCount">
+        select SQL_CALC_FOUND_ROWS
+        c.id as id,
+        u.username as username,
+        count(m.id) as materialCount,
+        c.name as name,
+        c.isDeleted as isDeleted,
+        c.updateAt as updateAt
+        from t_material_category c
+        left join t_user u
+        on c.createBy=u.id
+        left join t_material m
+        on c.id=m.catId
+        where c.isDeleted=0
+        group by c.id
+        <if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        ;SELECT found_rows() as recordCount
+    </select>
     <update id="deleteMaterialTags" parameterType="java.lang.Integer">
         update t_material_tag
         set isDeleted = true

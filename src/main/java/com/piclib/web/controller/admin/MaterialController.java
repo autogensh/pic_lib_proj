@@ -16,6 +16,7 @@ import org.im4java.core.IMOperation;
 import org.im4java.core.IdentifyCmd;
 import org.im4java.process.ArrayListOutputConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,9 @@ public class MaterialController extends TController<Material, MaterialExample, M
     private MaterialFileExample fileExample;
     private ConvertCmd convert;
     private IdentifyCmd identify;
+
+    @Value("${constants.default-material-dir}")
+    private String defaultMaterialDir;
 
     @Bean
     public ConvertCmd getConvertCmd() {
@@ -105,7 +109,7 @@ public class MaterialController extends TController<Material, MaterialExample, M
         int sec = c.get(Calendar.SECOND);
         int ms = c.get(Calendar.MILLISECOND);
         String date = String.format("%d-%d-%d", year, month, day);
-        String filePath = String.format("%s%s", Constants.defaultMaterialDir, date);
+        String filePath = String.format("%s%s", defaultMaterialDir, date);
         String fileName = String.format("%d%d%d%d%d%d%d_%s.orin",
                 year, month, day, hour, min, sec, ms,
                 Generator.generateString(5));
@@ -117,7 +121,7 @@ public class MaterialController extends TController<Material, MaterialExample, M
         }
         Utils.Timer timer = new Utils.Timer();
         try {
-            String newFile = String.format("%s\\%s.%s", filePath, fileName, ext);
+            String newFile = String.format("%s%s%s.%s", filePath, File.separator, fileName, ext);
             FileOutputStream fos = new FileOutputStream(newFile);
             fos.write(file.getBytes());
             fos.flush();
