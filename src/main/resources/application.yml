@@ -1,0 +1,49 @@
+server:
+  address: 127.0.0.1
+  port: 8080
+
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+  servlet:
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/piclib?useUnicode=true&characterEncoding=utf-8&userSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+    username: root
+    password: 123456
+
+  freemarker:
+    request-context-attribute: req
+    charset: utf-8
+    cache: false
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+    suffix: .ftl
+
+  jackson:
+    date-format: "yyyy-MM-dd HH:mm:ss"
+    joda-date-time-format: "yyyy-MM-dd HH:mm:ss"
+    time-zone: "Asia/Shanghai"
+    defaultPropertyInclusion: non_null   #非空node才序列化
+    serialization:
+      indent_output: true
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      fail_on_unknown_properties: false #未定义的key不反序列化
+    parser:
+      ALLOW_UNQUOTED_CONTROL_CHARS: true
+      ALLOW_SINGLE_QUOTES: true
+
+mybatis:
+  type-aliases-package: com.piclib.web.entity
+  mapper-locations: classpath*:mapper/*.xml
+
+constants:
+  default-material-dir: "D:\\nginx-1.17.5\\html\\images\\"
+
