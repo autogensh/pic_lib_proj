@@ -15,40 +15,6 @@
   <#include "header.ftl" />
   <div class="content">
     <div class="fw-page-builder-content">
-      <div class="fw-main-row section sliding section-bg" style="background-color:#f4f4f4;">
-        <div class="fw-container">
-          <div class="fw-row">
-            <div class="fw-col-xs-12 fw-col-sm-6">
-              <div style="height: 700px;">
-                <div style="position: absolute; top: 40%; left: 60%; height: 30%; width: 60%; margin: -5% 0 0 -37%;">
-                  <div><h2 style="text-align: center;">${focus.materialName}</h2></div>
-                  <div style="text-align: center; padding-top: 20px; margin-left: -50px;"><h5
-                    style="color: red; display: inline-block; padding: 10px;">PRO</h5>
-                    <div class="un-buton"><a
-                      href="/detail/${focus.id}">DOWNLOAD</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div style="text-align: center;">
-                <p style="font-family: Raleway , Arial, Helvetica; font-weight: 900; font-size: 13px; margin-bottom: 12px;">GET IN TOUCH WITH US</p>
-                <p>
-                  <a href="#" rel="noopener" target="_blank"><i class="iconfont icon-wx"></i></a>
-                  <a href="#" rel="noopener" target="_blank"><i class="iconfont icon-qq"></i></a>
-                  <a href="#" rel="noopener" target="_blank"><i class="iconfont icon-mail"></i></a>
-                </p></div>
-            </div>
-            <div class="fw-col-xs-12 fw-col-sm-6">
-              <p><img alt=""
-                      class="aligncenter size-large wp-image-9259"
-                      height="1024"
-                      src="${(focus.coverImg!'/images/blank.jpg')?replace('.orin.', '.1024x1024.')}"
-                      width="1024">
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="fw-main-row section sale section-bg">
         <div class="fw-container-fluid">
           <div class="fw-row">
@@ -61,12 +27,11 @@
         <div class="fw-container-fluid">
           <div class="fw-row">
             <div class="fw-col-xs-12">
-              <h3 style="text-align: center; color: #444; font-weight: 400; text-transform: none;">3D models of great
-                designs for the professional community</h3></div>
+              <h3 style="text-align: center; color: #444; font-weight: 400; text-transform: none;">${categoryName!''}</h3></div>
           </div>
         </div>
       </div>
-      <div class="fw-main-row section">
+      <div class="fw-main-row section ">
         <div class="fw-container">
           <div class="fw-row">
             <div class="fw-col-xs-12">
@@ -120,11 +85,11 @@
 <script src="/js/index.js"></script>
 <script>
   window.onload = function (obj) {
-      document.getElementById('x').onclick = function() {
-          var y = document.getElementById('y');
-          y.style.display = y.style.display === 'none' ? '' : 'none';
-      }
-      initPagination('edd_download_pagination', ${page}, ${pageSize}, ${total});
+    document.getElementById('x').onclick = function() {
+      var y = document.getElementById('y');
+      y.style.display = y.style.display === 'none' ? '' : 'none';
+    }
+    initPagination('edd_download_pagination', ${page}, ${pageSize}, ${total});
   }
 </script>
 </body>

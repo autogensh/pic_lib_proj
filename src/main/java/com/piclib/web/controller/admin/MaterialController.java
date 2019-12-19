@@ -8,6 +8,7 @@ import com.piclib.web.model.ItemListResp;
 import com.piclib.web.model.JsonResp;
 import com.piclib.web.model.MaterialUpdateReq;
 import com.piclib.web.model.UploadResp;
+import com.piclib.web.service.MaterialServiceImpl;
 import com.piclib.web.util.Constants;
 import com.piclib.web.util.Generator;
 import com.piclib.web.util.Utils;
@@ -39,6 +40,7 @@ public class MaterialController extends TController<Material, MaterialExample, M
     private MaterialFileExample fileExample;
     private ConvertCmd convert;
     private IdentifyCmd identify;
+    private MaterialServiceImpl materialService;
 
     @Value("${constants.default-material-dir}")
     private String defaultMaterialDir;
@@ -75,20 +77,11 @@ public class MaterialController extends TController<Material, MaterialExample, M
         this.convert = convert;
     }
 
-    @SuppressWarnings("unchecked")
     @GetMapping(basePath + "/list")
     public Object getList(
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "pageSize", required = false, defaultValue = Constants.defaultPageSize) Integer pageSize) {
-        HashMap<String, Object> req = new HashMap<>();
-        req.put("page", page);
-        req.put("pageSize", pageSize);
-        req.put("orderBy", "updateAt desc");
-        List<Object> list = adminMapper.selectMaterialList(req);
-        ItemListResp<HashMap<String, Object>> resp = new ItemListResp<>();
-        resp.items = (List<HashMap<String, Object>>) list.get(0);
-        resp.total = ((List<Integer>) list.get(1)).get(0);
-        return resp;
+        return materialService.getMaterialList(page, pageSize);
     }
 
     @PostMapping(basePath + "/upload")
@@ -128,6 +121,11 @@ public class MaterialController extends TController<Material, MaterialExample, M
             fos.close();
             System.out.println(String.format("复制文件耗时： %dms", timer.mark()));
 
+            // 生成不同大小的图片
+            createImages(newFile);
+            System.out.println(String.format("生成图片耗时： %dms", timer.mark()));
+
+            // 获取图片信息
             if ("png".equals(format)) {
                 // 使用GraphicsMagick获取图片信息
                 IMOperation op = new IMOperation();
@@ -165,6 +163,42 @@ public class MaterialController extends TController<Material, MaterialExample, M
         materialFile.setMeasure(String.format("%sx%s", width, height));
         materialFile.setColorSpace("sRGB");
         return new UploadResp(materialFile);
+    }
+
+    private void createImage(String origin, int width, int height) {
+        try {
+            IMOperation op = new IMOperation();
+            String size170 = origin.replace(".orin.", String.format(".%dx%d.", width, height));
+            op.resize(width, width);
+            op.addImage();
+            op.addImage();
+            convert.run(op, origin, size170);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void createImages(String origin) {
+        // 170x170
+        createImage(origin, 170, 170);
+
+        // 300x300
+        createImage(origin, 300, 300);
+
+        // 768x768
+        createImage(origin, 768, 768);
+
+        // 800x800
+        createImage(origin, 800, 800);
+
+        // 1000x1000
+        createImage(origin, 1000, 1000);
+
+        // 1024x1024
+        createImage(origin, 1024, 1024);
+
+        // 1280x1280
+        createImage(origin, 1280, 1280);
     }
 
     @PostMapping(basePath + "/update")

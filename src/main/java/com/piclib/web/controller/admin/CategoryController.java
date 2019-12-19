@@ -5,6 +5,7 @@ import com.piclib.web.dao.MaterialCategoryMapper;
 import com.piclib.web.entity.MaterialCategory;
 import com.piclib.web.entity.MaterialCategoryExample;
 import com.piclib.web.model.ItemListResp;
+import com.piclib.web.service.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,21 +19,17 @@ import java.util.List;
 public class CategoryController extends TController<MaterialCategory, MaterialCategoryExample, MaterialCategoryMapper> {
     private static final String basePath = "/admin/category";
 
+    private CategoryServiceImpl categoryService;
+
     @Autowired
-    public CategoryController(MaterialCategoryMapper mapper, MaterialCategoryExample example, AdminMapper adminMapper) {
+    public CategoryController(MaterialCategoryMapper mapper, MaterialCategoryExample example, AdminMapper adminMapper, CategoryServiceImpl categoryService) {
         super(mapper, example, adminMapper);
+        this.categoryService = categoryService;
     }
 
-    @SuppressWarnings("unchecked")
     @GetMapping(basePath + "/list")
     public Object getCategoryList() {
-        HashMap<String, Object> req = new HashMap<>();
-        req.put("orderBy", "id");
-        List<Object> list = adminMapper.selectCategoryList(req);
-        ItemListResp<HashMap<String, Object>> resp = new ItemListResp<>();
-        resp.items = (List<HashMap<String, Object>>) list.get(0);
-        resp.total = ((List<Integer>) list.get(1)).get(0);
-        return resp;
+        return categoryService.getCategoryList();
     }
 
     @PostMapping(basePath + "/update")

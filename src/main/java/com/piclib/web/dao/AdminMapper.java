@@ -1,5 +1,6 @@
 package com.piclib.web.dao;
 
+import com.piclib.web.model.MaterialInfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -7,9 +8,13 @@ import java.util.List;
 
 @Repository
 public interface AdminMapper {
-    List<Object> selectMaterialList(HashMap<String, Object> param);
+    List<HashMap<String, Object>> selectMaterialList(HashMap<String, Object> param);
 
-    List<Object> selectCategoryList(HashMap<String, Object> param);
+    List<HashMap<String, Object>> selectCategoryList(HashMap<String, Object> param);
+
+    String selectCategoryNameById(Integer id);
+
+    MaterialInfo selectMaterialInfoWithoutImg(Integer matId);
 
     int deleteMaterialTags(Integer matId);
 

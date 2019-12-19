@@ -4,25 +4,32 @@
     <resultMap id="recordCount" type="java.lang.Integer">
         <result column="recordCount" jdbcType="INTEGER"/>
     </resultMap>
+    <resultMap id="categoryName" type="java.lang.String">
+        <result column="name" jdbcType="VARCHAR"/>
+    </resultMap>
     <resultMap id="materialListResultMap" type="java.util.HashMap">
-        <!--        <result column="owner" jdbcType="VARCHAR"/>-->
-        <!--        <result column="categoryName" jdbcType="VARCHAR"/>-->
-        <!--        <result column="licenseTitle" jdbcType="VARCHAR"/>-->
-        <!--        <result column="id" jdbcType="INTEGER"/>-->
-        <!--        <result column="catId" jdbcType="INTEGER"/>-->
-        <!--        <result column="licenseId" jdbcType="INTEGER"/>-->
-        <!--        <result column="materialName" jdbcType="VARCHAR"/>-->
-        <!--        <result column="desc" jdbcType="VARCHAR"/>-->
-        <!--        <result column="coverImg" jdbcType="VARCHAR"/>-->
-        <!--        <result column="measure" jdbcType="VARCHAR"/>-->
-        <!--        <result column="colorSpace" jdbcType="VARCHAR"/>-->
-        <!--        <result column="fileSize" jdbcType="VARCHAR"/>-->
-        <!--        <result column="fileFormat" jdbcType="VARCHAR"/>-->
-        <!--        <result column="views" jdbcType="INTEGER"/>-->
-        <!--        <result column="downs" jdbcType="INTEGER"/>-->
-        <!--        <result column="createAt" jdbcType="TIMESTAMP"/>-->
-        <!--        <result column="updateAt" jdbcType="TIMESTAMP"/>-->
-        <!--        <result column="createBy" jdbcType="INTEGER"/>-->
+    </resultMap>
+    <resultMap id="MaterialInfoWithoutImgResultMap" type="com.piclib.web.model.MaterialInfo">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="catId" jdbcType="INTEGER" property="catId" />
+        <result column="materialName" jdbcType="VARCHAR" property="materialName" />
+        <result column="isDeleted" jdbcType="BIT" property="isDeleted" />
+        <result column="license" jdbcType="INTEGER" property="license" />
+        <result column="desc" jdbcType="VARCHAR" property="desc" />
+        <result column="views" jdbcType="INTEGER" property="views" />
+        <result column="downs" jdbcType="INTEGER" property="downs" />
+        <result column="createAt" jdbcType="TIMESTAMP" property="createAt" />
+        <result column="updateAt" jdbcType="TIMESTAMP" property="updateAt" />
+        <result column="createBy" jdbcType="INTEGER" property="createBy" />
+        <result column="tags" jdbcType="VARCHAR" property="tags" />
+        <result column="owner" jdbcType="VARCHAR" property="owner" />
+        <result column="categoryName" jdbcType="VARCHAR" property="categoryName" />
+        <result column="licenseTitle" jdbcType="VARCHAR" property="licenseTitle" />
+        <result column="coverImg" jdbcType="VARCHAR" property="coverImg" />
+        <result column="measure" jdbcType="VARCHAR" property="measure" />
+        <result column="colorSpace" jdbcType="VARCHAR" property="colorSpace" />
+        <result column="fileSize" jdbcType="VARCHAR" property="fileSize" />
+        <result column="fileFormat" jdbcType="VARCHAR" property="fileFormat" />
     </resultMap>
     <select id="selectMaterialList" parameterType="java.util.HashMap" resultMap="materialListResultMap, recordCount">
         select SQL_CALC_FOUND_ROWS
@@ -44,7 +51,8 @@
         m.downs as downs,
         m.createAt as createAt,
         m.updateAt as updateAt,
-        m.createBy as createBy
+        m.createBy as createBy,
+        m.isDeleted as isDeleted
         from t_material m
         LEFT JOIN t_material_category c
         on m.catId = c.id
@@ -58,6 +66,9 @@
         isDeleted=false group by matId) f
         on m.id=f.matId
         where m.isDeleted = false
+        <if test="catId != null">
+            and m.catId = ${catId}
+        </if>
         <if test="orderBy != null">
             order by ${orderBy}
         </if>
@@ -85,6 +96,46 @@
             order by ${orderBy}
         </if>
         ;SELECT found_rows() as recordCount
+    </select>
+    <select id="selectMaterialInfoWithoutImg" parameterType="java.lang.Integer" resultMap="MaterialInfoWithoutImgResultMap">
+        select
+        t.tags as tags,
+        u.username as owner,
+        c.name as categoryName,
+        l.title as licenseTitle,
+        m.id as id,
+        m.catId as catId,
+        m.license as licenseId,
+        m.name as materialName,
+        m.`desc` as `desc`,
+        f.fileUrl as coverImg,
+        f.measure as measure,
+        f.colorSpace as colorSpace,
+        f.fileSize as fileSize,
+        f.fileFormat as fileFormat,
+        m.views as views,
+        m.downs as downs,
+        m.createAt as createAt,
+        m.updateAt as updateAt,
+        m.createBy as createBy,
+        m.isDeleted as isDeleted
+        from t_material m
+        LEFT JOIN t_material_category c
+        on m.catId = c.id
+        LEFT JOIN t_user u
+        on m.createBy = u.id
+        LEFT JOIN t_license l
+        on m.license = l.id
+        LEFT JOIN (select group_concat(tag order by id) as tags, matId from t_material_tag where isDeleted=false group by matId) t
+        on m.id = t.matId
+        LEFT JOIN (select min(id), matId, fileUrl, measure, colorSpace, fileSize, fileFormat from t_material_file where
+        isDeleted=false group by matId) f
+        on m.id=f.matId
+        where m.id = #{matId}
+        ; update t_material set views=views+1 where id = #{matId}
+    </select>
+    <select id="selectCategoryNameById" parameterType="java.lang.Integer" resultMap="categoryName">
+        select name from t_material_category where id = #{id}
     </select>
     <update id="deleteMaterialTags" parameterType="java.lang.Integer">
         update t_material_tag

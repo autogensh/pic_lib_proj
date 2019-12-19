@@ -8381,8 +8381,8 @@ header-wrapper
   display:inline-block;
 }
 .icon-down:after {
-  content: '\e64a';
-  font-size: 30px;
+  content: '\e9cd';
+  font-size: 26px;
   margin: 3px;
   display:-moz-inline-box;
   display: inline-block;
