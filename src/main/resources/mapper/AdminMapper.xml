@@ -84,7 +84,8 @@
         count(m.id) as materialCount,
         c.name as name,
         c.isDeleted as isDeleted,
-        c.updateAt as updateAt
+        c.updateAt as updateAt,
+        c.parent as parent
         from t_material_category c
         left join t_user u
         on c.createBy=u.id
@@ -162,4 +163,28 @@
             (#{item.matId}, #{item.tag}, #{item.isDeleted})
         </foreach>
     </insert>
+    <update id="moveCategoryBefore">
+UPDATE t_material_category
+SET
+  `order` = ( SELECT * FROM ( SELECT `order` - 0.1 FROM t_material_category WHERE id = #{dropId} ) tmp ),
+  `parent` = ( SELECT * FROM ( SELECT `parent` FROM t_material_category WHERE id = #{dropId} ) tmp )
+WHERE id = #{dragId};
+call reduceOrder();
+    </update>
+    <update id="moveCategoryAfter">
+UPDATE t_material_category
+SET
+  `order` = ( SELECT * FROM ( SELECT `order` + 0.1 FROM t_material_category WHERE id = #{dropId} ) tmp ),
+  `parent` = ( SELECT * FROM ( SELECT `parent` FROM t_material_category WHERE id = #{dropId} ) tmp )
+WHERE id = #{dragId};
+call reduceOrder();
+    </update>
+    <update id="moveCategoryInner">
+UPDATE t_material_category
+SET
+  `order` = ( SELECT (CASE WHEN o IS NULL THEN 0 ELSE o END) FROM ( select (max(`order`) + 0.1) as o from t_material_category where parent=#{dropId} ) tmp ),
+  `parent` = #{dropId}
+WHERE id = #{dragId};
+call reduceOrder();
+    </update>
 </mapper>

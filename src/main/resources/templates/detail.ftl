@@ -48,6 +48,7 @@
             <div itemprop="alternativeHeadline">
               <p>${info.desc}</p>
               <hr><a href="/pricing"><div class="le-buton1"> REGISTER<i class="unlock"></i> </div></a>
+              <hr><a href="${'/download' + (info.coverImg!'/images/blank.jpg')}" download="${info.materialName + '.' + info.fileFormat}"><div class="le-buton1"> 下载(登录后出现)<i class="unlock"></i> </div></a>
               <br>类目: <a href="/category/${info.catId}" rel="cat">${info.categoryName}</a>
               <br>标签: <a href="#" rel="tag">${info.tags!''}</a>
               <br>上传人: ${info.owner}

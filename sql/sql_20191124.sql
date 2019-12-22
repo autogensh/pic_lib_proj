@@ -63,6 +63,8 @@ create table if not exists `t_material_category`
     `createAt`  datetime     not null default CURRENT_TIMESTAMP comment '创建时间',
     `updateAt`  datetime     not null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP comment '更新时间',
     `createBy`  int unsigned not null comment '创建者',
+    `parent` int unsigned not null default 0 comment '父类目ID,一级类目这个字段为0',
+    `order` decimal(20,10) not null default 999999 comment '排序,会按照order从小到大来排序,默认等于id',
     primary key (`id`)
 ) charset = `utf8mb4`
   engine = InnoDB

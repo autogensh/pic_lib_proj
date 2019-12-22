@@ -2,6 +2,7 @@ package com.piclib.web.entity;
 
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -565,6 +566,126 @@ public class MaterialCategoryExample extends BaseExample {
 
         public Criteria andCreateByNotBetween(Integer value1, Integer value2) {
             addCriterion("createBy not between", value1, value2, "createBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIsNull() {
+            addCriterion("parent is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIsNotNull() {
+            addCriterion("parent is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentEqualTo(Integer value) {
+            addCriterion("parent =", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentNotEqualTo(Integer value) {
+            addCriterion("parent <>", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentGreaterThan(Integer value) {
+            addCriterion("parent >", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentGreaterThanOrEqualTo(Integer value) {
+            addCriterion("parent >=", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentLessThan(Integer value) {
+            addCriterion("parent <", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentLessThanOrEqualTo(Integer value) {
+            addCriterion("parent <=", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIn(List<Integer> values) {
+            addCriterion("parent in", values, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentNotIn(List<Integer> values) {
+            addCriterion("parent not in", values, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentBetween(Integer value1, Integer value2) {
+            addCriterion("parent between", value1, value2, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentNotBetween(Integer value1, Integer value2) {
+            addCriterion("parent not between", value1, value2, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIsNull() {
+            addCriterion("\"order` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIsNotNull() {
+            addCriterion("\"order` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderEqualTo(BigDecimal value) {
+            addCriterion("\"order` =", value, "order");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNotEqualTo(BigDecimal value) {
+            addCriterion("\"order` <>", value, "order");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderGreaterThan(BigDecimal value) {
+            addCriterion("\"order` >", value, "order");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("\"order` >=", value, "order");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLessThan(BigDecimal value) {
+            addCriterion("\"order` <", value, "order");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("\"order` <=", value, "order");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIn(List<BigDecimal> values) {
+            addCriterion("\"order` in", values, "order");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNotIn(List<BigDecimal> values) {
+            addCriterion("\"order` not in", values, "order");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("\"order` between", value1, value2, "order");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("\"order` not between", value1, value2, "order");
             return (Criteria) this;
         }
     }

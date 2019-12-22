@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface BaseMapper {
+    BaseEntity selectByPrimaryKey(Integer id);
+
     List selectByExample(BaseExample example);
 
     int insertSelective(BaseEntity entity);

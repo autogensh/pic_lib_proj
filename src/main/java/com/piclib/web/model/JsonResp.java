@@ -43,4 +43,5 @@ public class JsonResp {
         return new JsonResp(-5, "没有操作权限！");
     }
 
+    public static Object unsupportOperation() { return new JsonResp(-6, "不支持的操作！"); }
 }

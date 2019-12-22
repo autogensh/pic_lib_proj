@@ -54,7 +54,9 @@ public class TController<Entity extends BaseEntity,
             e.setCreateBy(user.getId());
             result = mapper.insertSelective(e);
         } else {
-            if (!e.getCreateBy().equals(user.getId())) {
+            // 验证操作权限
+            BaseEntity e2 = mapper.selectByPrimaryKey(e.getId());
+            if (!e2.getCreateBy().equals(user.getId())) {
                 return JsonResp.unauthorizedOperation();
             }
             result = mapper.updateByPrimaryKeySelective(e);
@@ -68,7 +70,9 @@ public class TController<Entity extends BaseEntity,
     @SuppressWarnings("unchecked")
     public Object delete(@RequestBody Entity e) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!e.getCreateBy().equals(user.getId())) {
+        BaseEntity e2 = mapper.selectByPrimaryKey(e.getId());
+        // 验证操作权限
+        if (!e2.getCreateBy().equals(user.getId())) {
             return JsonResp.unauthorizedOperation();
         }
         e.setIsDeleted(true);

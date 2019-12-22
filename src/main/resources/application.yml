@@ -45,5 +45,5 @@ mybatis:
   mapper-locations: classpath*:mapper/*.xml
 
 constants:
-  default-material-dir: "D:\\nginx-1.17.5\\html\\images\\"
+  default-material-dir: "C:\\server\\nginx-1.17.6\\html\\images\\"
 

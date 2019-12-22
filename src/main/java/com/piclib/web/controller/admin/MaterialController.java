@@ -61,10 +61,12 @@ public class MaterialController extends TController<Material, MaterialExample, M
             MaterialExample example,
             AdminMapper adminMapper,
             MaterialFileMapper fileMapper,
-            MaterialFileExample fileExample) {
+            MaterialFileExample fileExample,
+            MaterialServiceImpl materialService) {
         super(mapper, example, adminMapper);
         this.fileMapper = fileMapper;
         this.fileExample = fileExample;
+        this.materialService = materialService;
     }
 
     @Autowired

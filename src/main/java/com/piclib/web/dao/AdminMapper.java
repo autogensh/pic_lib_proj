@@ -1,6 +1,7 @@
 package com.piclib.web.dao;
 
 import com.piclib.web.model.MaterialInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -23,4 +24,10 @@ public interface AdminMapper {
     int insertMaterialFileList(List<HashMap<String, Object>> list);
 
     int insertMaterialTagList(List<HashMap<String, Object>> list);
+
+    int moveCategoryBefore(@Param("dragId") Integer dragId, @Param("dropId") Integer dropId);
+
+    int moveCategoryAfter(@Param("dragId") Integer dragId, @Param("dropId") Integer dropId);
+
+    int moveCategoryInner(@Param("dragId") Integer dragId, @Param("dropId") Integer dropId);
 }
